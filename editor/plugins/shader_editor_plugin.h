@@ -63,6 +63,11 @@ public:
 	ShaderTextEditor();
 };
 
+class ShaderViewer : public PanelContainer
+{
+
+};
+
 class ShaderEditor : public PanelContainer {
 
 	GDCLASS(ShaderEditor, PanelContainer);
@@ -100,13 +105,17 @@ class ShaderEditor : public PanelContainer {
 	GotoLineDialog *goto_line_dialog;
 	ConfirmationDialog *erase_tab_confirm;
 
-	ShaderTextEditor *shader_editor;
+	ShaderTextEditor *shader_text_editor;
+	ShaderViewer *shader_viewer;
 
 	void _menu_option(int p_option);
 	void _params_changed();
 	mutable Ref<Shader> shader;
 
 	void _editor_settings_changed();
+
+	void _setup_shader_text_editor(EditorNode *p_node);
+	void _setup_shader_viewer(EditorNode *p_node);
 
 protected:
 	void _notification(int p_what);
@@ -138,8 +147,8 @@ class ShaderEditorPlugin : public EditorPlugin {
 	Button *button;
 
 public:
-	virtual String get_name() const { return "Shader"; }
-	bool has_main_screen() const { return false; }
+	virtual String get_name() const { return "Shaders"; }
+	bool has_main_screen() const { return true; }
 	virtual void edit(Object *p_object);
 	virtual bool handles(Object *p_object) const;
 	virtual void make_visible(bool p_visible);

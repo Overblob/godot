@@ -219,32 +219,32 @@ void ShaderEditor::_menu_option(int p_option) {
 
 	switch (p_option) {
 		case EDIT_UNDO: {
-			shader_editor->get_text_edit()->undo();
+			shader_text_editor->get_text_edit()->undo();
 		} break;
 		case EDIT_REDO: {
-			shader_editor->get_text_edit()->redo();
+			shader_text_editor->get_text_edit()->redo();
 		} break;
 		case EDIT_CUT: {
-			shader_editor->get_text_edit()->cut();
+			shader_text_editor->get_text_edit()->cut();
 		} break;
 		case EDIT_COPY: {
-			shader_editor->get_text_edit()->copy();
+			shader_text_editor->get_text_edit()->copy();
 		} break;
 		case EDIT_PASTE: {
-			shader_editor->get_text_edit()->paste();
+			shader_text_editor->get_text_edit()->paste();
 		} break;
 		case EDIT_SELECT_ALL: {
-			shader_editor->get_text_edit()->select_all();
+			shader_text_editor->get_text_edit()->select_all();
 		} break;
 		case EDIT_MOVE_LINE_UP: {
-			shader_editor->move_lines_up();
+			shader_text_editor->move_lines_up();
 		} break;
 		case EDIT_MOVE_LINE_DOWN: {
-			shader_editor->move_lines_down();
+			shader_text_editor->move_lines_down();
 		} break;
 		case EDIT_INDENT_LEFT: {
 
-			TextEdit *tx = shader_editor->get_text_edit();
+			TextEdit *tx = shader_text_editor->get_text_edit();
 			if (shader.is_null())
 				return;
 
@@ -253,7 +253,7 @@ void ShaderEditor::_menu_option(int p_option) {
 		} break;
 		case EDIT_INDENT_RIGHT: {
 
-			TextEdit *tx = shader_editor->get_text_edit();
+			TextEdit *tx = shader_text_editor->get_text_edit();
 			if (shader.is_null())
 				return;
 
@@ -261,14 +261,14 @@ void ShaderEditor::_menu_option(int p_option) {
 
 		} break;
 		case EDIT_DELETE_LINE: {
-			shader_editor->delete_lines();
+			shader_text_editor->delete_lines();
 		} break;
 		case EDIT_CLONE_DOWN: {
-			shader_editor->clone_lines_down();
+			shader_text_editor->clone_lines_down();
 		} break;
 		case EDIT_TOGGLE_COMMENT: {
 
-			TextEdit *tx = shader_editor->get_text_edit();
+			TextEdit *tx = shader_text_editor->get_text_edit();
 			if (shader.is_null())
 				return;
 
@@ -320,31 +320,31 @@ void ShaderEditor::_menu_option(int p_option) {
 		} break;
 		case EDIT_COMPLETE: {
 
-			shader_editor->get_text_edit()->query_code_comple();
+			shader_text_editor->get_text_edit()->query_code_comple();
 		} break;
 		case SEARCH_FIND: {
 
-			shader_editor->get_find_replace_bar()->popup_search();
+			shader_text_editor->get_find_replace_bar()->popup_search();
 		} break;
 		case SEARCH_FIND_NEXT: {
 
-			shader_editor->get_find_replace_bar()->search_next();
+			shader_text_editor->get_find_replace_bar()->search_next();
 		} break;
 		case SEARCH_FIND_PREV: {
 
-			shader_editor->get_find_replace_bar()->search_prev();
+			shader_text_editor->get_find_replace_bar()->search_prev();
 		} break;
 		case SEARCH_REPLACE: {
 
-			shader_editor->get_find_replace_bar()->popup_replace();
+			shader_text_editor->get_find_replace_bar()->popup_replace();
 		} break;
 		case SEARCH_GOTO_LINE: {
 
-			goto_line_dialog->popup_find_line(shader_editor->get_text_edit());
+			goto_line_dialog->popup_find_line(shader_text_editor->get_text_edit());
 		} break;
 	}
 	if (p_option != SEARCH_FIND && p_option != SEARCH_REPLACE && p_option != SEARCH_GOTO_LINE) {
-		shader_editor->get_text_edit()->call_deferred("grab_focus");
+		shader_text_editor->get_text_edit()->call_deferred("grab_focus");
 	}
 }
 
@@ -352,33 +352,33 @@ void ShaderEditor::_notification(int p_what) {
 
 	if (p_what == NOTIFICATION_VISIBILITY_CHANGED) {
 		if (is_visible_in_tree())
-			shader_editor->get_text_edit()->grab_focus();
+			shader_text_editor->get_text_edit()->grab_focus();
 	}
 }
 
 void ShaderEditor::_params_changed() {
 
-	shader_editor->_validate_script();
+	shader_text_editor->_validate_script();
 }
 
 void ShaderEditor::_editor_settings_changed() {
 
-	shader_editor->get_text_edit()->set_auto_brace_completion(EditorSettings::get_singleton()->get("text_editor/completion/auto_brace_complete"));
-	shader_editor->get_text_edit()->set_scroll_pass_end_of_file(EditorSettings::get_singleton()->get("text_editor/cursor/scroll_past_end_of_file"));
-	shader_editor->get_text_edit()->set_indent_size(EditorSettings::get_singleton()->get("text_editor/indent/size"));
-	shader_editor->get_text_edit()->set_indent_using_spaces(EditorSettings::get_singleton()->get("text_editor/indent/type"));
-	shader_editor->get_text_edit()->set_auto_indent(EditorSettings::get_singleton()->get("text_editor/indent/auto_indent"));
-	shader_editor->get_text_edit()->set_draw_tabs(EditorSettings::get_singleton()->get("text_editor/indent/draw_tabs"));
-	shader_editor->get_text_edit()->set_show_line_numbers(EditorSettings::get_singleton()->get("text_editor/line_numbers/show_line_numbers"));
-	shader_editor->get_text_edit()->set_syntax_coloring(EditorSettings::get_singleton()->get("text_editor/highlighting/syntax_highlighting"));
-	shader_editor->get_text_edit()->set_highlight_all_occurrences(EditorSettings::get_singleton()->get("text_editor/highlighting/highlight_all_occurrences"));
-	shader_editor->get_text_edit()->set_highlight_current_line(EditorSettings::get_singleton()->get("text_editor/highlighting/highlight_current_line"));
-	shader_editor->get_text_edit()->cursor_set_blink_enabled(EditorSettings::get_singleton()->get("text_editor/cursor/caret_blink"));
-	shader_editor->get_text_edit()->cursor_set_blink_speed(EditorSettings::get_singleton()->get("text_editor/cursor/caret_blink_speed"));
-	shader_editor->get_text_edit()->add_constant_override("line_spacing", EditorSettings::get_singleton()->get("text_editor/theme/line_spacing"));
-	shader_editor->get_text_edit()->cursor_set_block_mode(EditorSettings::get_singleton()->get("text_editor/cursor/block_caret"));
-	shader_editor->get_text_edit()->set_smooth_scroll_enabled(EditorSettings::get_singleton()->get("text_editor/open_scripts/smooth_scrolling"));
-	shader_editor->get_text_edit()->set_v_scroll_speed(EditorSettings::get_singleton()->get("text_editor/open_scripts/v_scroll_speed"));
+	shader_text_editor->get_text_edit()->set_auto_brace_completion(EditorSettings::get_singleton()->get("text_editor/completion/auto_brace_complete"));
+	shader_text_editor->get_text_edit()->set_scroll_pass_end_of_file(EditorSettings::get_singleton()->get("text_editor/cursor/scroll_past_end_of_file"));
+	shader_text_editor->get_text_edit()->set_indent_size(EditorSettings::get_singleton()->get("text_editor/indent/size"));
+	shader_text_editor->get_text_edit()->set_indent_using_spaces(EditorSettings::get_singleton()->get("text_editor/indent/type"));
+	shader_text_editor->get_text_edit()->set_auto_indent(EditorSettings::get_singleton()->get("text_editor/indent/auto_indent"));
+	shader_text_editor->get_text_edit()->set_draw_tabs(EditorSettings::get_singleton()->get("text_editor/indent/draw_tabs"));
+	shader_text_editor->get_text_edit()->set_show_line_numbers(EditorSettings::get_singleton()->get("text_editor/line_numbers/show_line_numbers"));
+	shader_text_editor->get_text_edit()->set_syntax_coloring(EditorSettings::get_singleton()->get("text_editor/highlighting/syntax_highlighting"));
+	shader_text_editor->get_text_edit()->set_highlight_all_occurrences(EditorSettings::get_singleton()->get("text_editor/highlighting/highlight_all_occurrences"));
+	shader_text_editor->get_text_edit()->set_highlight_current_line(EditorSettings::get_singleton()->get("text_editor/highlighting/highlight_current_line"));
+	shader_text_editor->get_text_edit()->cursor_set_blink_enabled(EditorSettings::get_singleton()->get("text_editor/cursor/caret_blink"));
+	shader_text_editor->get_text_edit()->cursor_set_blink_speed(EditorSettings::get_singleton()->get("text_editor/cursor/caret_blink_speed"));
+	shader_text_editor->get_text_edit()->add_constant_override("line_spacing", EditorSettings::get_singleton()->get("text_editor/theme/line_spacing"));
+	shader_text_editor->get_text_edit()->cursor_set_block_mode(EditorSettings::get_singleton()->get("text_editor/cursor/block_caret"));
+	shader_text_editor->get_text_edit()->set_smooth_scroll_enabled(EditorSettings::get_singleton()->get("text_editor/open_scripts/smooth_scrolling"));
+	shader_text_editor->get_text_edit()->set_v_scroll_speed(EditorSettings::get_singleton()->get("text_editor/open_scripts/v_scroll_speed"));
 }
 
 void ShaderEditor::_bind_methods() {
@@ -406,7 +406,7 @@ void ShaderEditor::ensure_select_current() {
 
 void ShaderEditor::goto_line_selection(int p_line, int p_begin, int p_end) {
 
-	shader_editor->goto_line_selection(p_line, p_begin, p_end);
+	shader_text_editor->goto_line_selection(p_line, p_begin, p_end);
 }
 
 void ShaderEditor::edit(const Ref<Shader> &p_shader) {
@@ -416,7 +416,7 @@ void ShaderEditor::edit(const Ref<Shader> &p_shader) {
 
 	shader = p_shader;
 
-	shader_editor->set_edited_shader(p_shader);
+	shader_text_editor->set_edited_shader(p_shader);
 
 	//vertex_editor->set_edited_shader(shader,ShaderLanguage::SHADER_MATERIAL_VERTEX);
 	// see if already has it
@@ -437,7 +437,7 @@ void ShaderEditor::save_external_data() {
 void ShaderEditor::apply_shaders() {
 
 	if (shader.is_valid()) {
-		shader->set_code(shader_editor->get_text_edit()->get_text());
+		shader->set_code(shader_text_editor->get_text_edit()->get_text());
 		shader->set_edited(true);
 	}
 }
@@ -451,7 +451,7 @@ void ShaderEditor::_text_edit_gui_input(const Ref<InputEvent> &ev) {
 		if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed()) {
 
 			int col, row;
-			TextEdit *tx = shader_editor->get_text_edit();
+			TextEdit *tx = shader_text_editor->get_text_edit();
 			tx->_get_mouse_pos(mb->get_global_position() - tx->get_global_position(), row, col);
 			tx->set_right_click_moves_caret(EditorSettings::get_singleton()->get("text_editor/cursor/right_click_moves_caret"));
 
@@ -502,25 +502,35 @@ void ShaderEditor::_make_context_menu(bool p_selection) {
 	context_menu->popup();
 }
 
+void ShaderEditor::_setup_shader_text_editor(EditorNode *p_node)
+{
+
+}
+
+void ShaderEditor::_setup_shader_viewer(EditorNode *p_node)
+{
+	
+}
+
 ShaderEditor::ShaderEditor(EditorNode *p_node) {
 
-	shader_editor = memnew(ShaderTextEditor);
-	shader_editor->set_v_size_flags(SIZE_EXPAND_FILL);
-	shader_editor->add_constant_override("separation", 0);
-	shader_editor->set_anchors_and_margins_preset(Control::PRESET_WIDE);
+	shader_text_editor = memnew(ShaderTextEditor);
+	shader_text_editor->set_v_size_flags(SIZE_EXPAND_FILL);
+	shader_text_editor->add_constant_override("separation", 0);
+	shader_text_editor->set_anchors_and_margins_preset(Control::PRESET_WIDE);
 
-	shader_editor->connect("script_changed", this, "apply_shaders");
+	shader_text_editor->connect("script_changed", this, "apply_shaders");
 	EditorSettings::get_singleton()->connect("settings_changed", this, "_editor_settings_changed");
 
-	shader_editor->get_text_edit()->set_callhint_settings(
+	shader_text_editor->get_text_edit()->set_callhint_settings(
 			EditorSettings::get_singleton()->get("text_editor/completion/put_callhint_tooltip_below_current_line"),
 			EditorSettings::get_singleton()->get("text_editor/completion/callhint_tooltip_offset"));
 
-	shader_editor->get_text_edit()->set_select_identifiers_on_hover(true);
-	shader_editor->get_text_edit()->set_context_menu_enabled(false);
-	shader_editor->get_text_edit()->connect("gui_input", this, "_text_edit_gui_input");
+	shader_text_editor->get_text_edit()->set_select_identifiers_on_hover(true);
+	shader_text_editor->get_text_edit()->set_context_menu_enabled(false);
+	shader_text_editor->get_text_edit()->connect("gui_input", this, "_text_edit_gui_input");
 
-	shader_editor->update_editor_settings();
+	shader_text_editor->update_editor_settings();
 
 	context_menu = memnew(PopupMenu);
 	add_child(context_menu);
@@ -571,7 +581,7 @@ ShaderEditor::ShaderEditor(EditorNode *p_node) {
 	hbc->add_child(search_menu);
 	hbc->add_child(edit_menu);
 	hbc->add_style_override("panel", p_node->get_gui_base()->get_stylebox("ScriptEditorPanel", "EditorStyles"));
-	main_container->add_child(shader_editor);
+	main_container->add_child(shader_text_editor);
 
 	goto_line_dialog = memnew(GotoLineDialog);
 	add_child(goto_line_dialog);
@@ -624,11 +634,13 @@ void ShaderEditorPlugin::apply_changes() {
 ShaderEditorPlugin::ShaderEditorPlugin(EditorNode *p_node) {
 
 	editor = p_node;
-	shader_editor = memnew(ShaderEditor(p_node));
 
-	shader_editor->set_custom_minimum_size(Size2(0, 300));
-	button = editor->add_bottom_panel_item(TTR("Shader"), shader_editor);
-	button->hide();
+	shader_editor = memnew(ShaderEditor(p_node));
+	shader_editor->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	editor->get_viewport()->add_child(shader_editor);
+	shader_editor->set_anchors_and_margins_preset(Control::PRESET_WIDE);
+	shader_editor->hide();
+
 }
 
 ShaderEditorPlugin::~ShaderEditorPlugin() {
