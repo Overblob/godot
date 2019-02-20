@@ -604,14 +604,16 @@ bool ShaderEditorPlugin::handles(Object *p_object) const {
 void ShaderEditorPlugin::make_visible(bool p_visible) {
 
 	if (p_visible) {
-		button->show();
-		editor->make_bottom_panel_item_visible(shader_editor);
+		// button->show();
+		// editor->make_bottom_panel_item_visible(shader_editor);
+		shader_editor->show();
 
 	} else {
 
-		button->hide();
-		if (shader_editor->is_visible_in_tree())
-			editor->hide_bottom_panel();
+		// button->hide();
+		shader_editor->hide();
+		// if (shader_editor->is_visible_in_tree())
+		// 	editor->hide_bottom_panel();
 		shader_editor->apply_shaders();
 	}
 }

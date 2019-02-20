@@ -147,7 +147,7 @@ class ShaderEditorPlugin : public EditorPlugin {
 	Button *button;
 
 public:
-	virtual String get_name() const { return "Shaders"; }
+	virtual String get_name() const { return "Shader"; }
 	bool has_main_screen() const { return true; }
 	virtual void edit(Object *p_object);
 	virtual bool handles(Object *p_object) const;
